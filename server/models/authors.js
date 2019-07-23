@@ -2,7 +2,6 @@
 const connection = require('./connect.js');
 const graphql = require('graphql');
 const {
-   
     GraphQLID,
     GraphQLString,
     GraphQLSchema,
@@ -12,7 +11,7 @@ const {
     GraphQLObjectType
 } = graphql;
 
-//Table Author
+//Table Authors
 AuthorsType = new GraphQLObjectType({
     name : 'Author',
     fields : () => ({
@@ -25,50 +24,47 @@ AuthorsType = new GraphQLObjectType({
 });
 
 
-module.exports.RootQueryAuthor = new GraphQLObjectType({
-    name : 'RootQueryAuthor',
-    fields : {
-        authors : {
-            resolve(parent, args) {
-                return new Promise(
-                    function(resolve, reject) {
-                        var selectAuthors = "select * from authors";
-                        connection.query(selectAuthors, function(error, result) {
-                            if(error){
-                              return reject(error);
-                            } else {
-                              return resolve(result);
-                            }
-
-                        });
-                    }   
-                )
-                
-            }
-        },
-        author : {
-          type : AuthorsType,
-          args : {id: {type : GraphQLInt}},
-            resolve(parent, args) {
-                return new Promise(
-                    function(resolve, reject) {
-                        var selectAuthor = "SELECT * FROM authors WHERE id = " + args.id;
-                        connection.query(selectAuthor, args.id, function(error, result) {
-                            if(error){
-                              return reject(error);
-                            } else {
-                              console.log(result);
-                              return resolve(result[0]);
-                            }
-
-                        });
-                    }   
-                )
-                
-            }
-        }
+module.exports.authors = {
+    type : GraphQLList(AuthorsType),
+    resolve(parent, args) {
+        return new Promise(
+            function(resolve, reject){
+                var selectBooks = "SELECT * FROM expressdb.authors";
+                connection.query(selectBooks, function(error, result){
+                    if(error) {
+                        return reject(error);
+                    } else {
+                        console.log(result);
+                        return resolve(result);
+                    }
+                });
+            }   
+        )
     }
-});
+}
+
+module.exports.author = {
+    type : AuthorsType,
+    args : {
+        id : {type : GraphQLInt}
+    },
+    resolve(parent, args) {
+        return new Promise(
+            function(resolve, reject){
+                var id = args.id;
+                var selectBook = "SELECT * FROM expressdb.authors WHERE id = " +id;
+                connection.query(selectBook, id, function(error, result){
+                    if(error) {
+                        return reject(error);
+                    } else {
+                        console.log(result[0]);
+                        return resolve(result[0]);
+                    }
+                });
+            }   
+        )
+    }
+}
 
 
 module.exports.createTableAuthors = {
@@ -108,6 +104,55 @@ module.exports.addAuthor = {
             function(resolve, reject){
                 var addAuthorQuery = "INSERT INTO expressdb.authors SET ?";
                 connection.query(addAuthorQuery, myValues, function(error, result){
+                    if(error) {
+                        return reject(error);
+                    } else {
+                        return resolve(result);
+                    }
+                });
+            }   
+        )
+    }
+}
+
+module.exports.deleteAuthor = {
+    type : AuthorsType,
+    args : {
+        id : {type : new GraphQLNonNull(GraphQLInt)}
+    },
+    resolve(parent, args) {
+        var  id = args.id
+        return new Promise(
+            function(resolve, reject){
+                var deleteAuthorQuery = "DELETE FROM authors WHERE id = " + id;
+                connection.query(deleteAuthorQuery, id, function(error, result){
+                    if(error) {
+                        return reject(error);
+                    } else {
+                        return resolve(result);
+                    }
+                });
+            }   
+        )
+    }
+}
+
+module.exports.updateAuthor = {
+    type : BooksType,
+    args : {
+        id : {type : new GraphQLNonNull(GraphQLInt)},
+        firstName : {type : new GraphQLNonNull(GraphQLString)},
+        lastName : {type : new GraphQLNonNull(GraphQLString)},
+        age : {type : new GraphQLNonNull(GraphQLInt)}
+    },
+    resolve(parent, args) {
+        var  id = args.id;
+        var  firstName = args.firstName;
+        var  lastName = args.lastName;
+        var  age = args.age;
+        return new Promise(
+            function(resolve, reject){
+                connection.query("UPDATE authors SET firstName = ?, lastName = ?, age = ? WHERE id = ?", [firstName, lastName, age, id], function(error, result){
                     if(error) {
                         return reject(error);
                     } else {

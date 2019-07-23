@@ -6,20 +6,14 @@ var connection = mysql.createConnection({
     database : 'expressdb'
 });
 
-return new Promise(
-    function(resolve, reject){
-        connection.connect(function(error, result) {
-            if(error) {
-                return reject(error);
-            } else {
-                return resolve(result);
-            }
-        })
-    } 
-).then(function() {
-    console.log('My Connect => Success');
-}).catch(function(err) {
-    console.log('My Connect => Fail', err);
-});
+
+connection.connect(function(error, result) {
+    if(error) {
+        console.log("My Errors",error);
+    } else {
+        console.log("My Success", result);
+    }
+})
+    
 
 module.exports = connection;
