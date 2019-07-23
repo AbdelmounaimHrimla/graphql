@@ -1,0 +1,57 @@
+.myBook {
+    //background: #DDD;
+    margin : 0 auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.inside-myBook {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.btn-back{
+    align-self: center;
+    border : none;
+    color : #FFF;
+    background: #3498db;
+    padding : 10px 15px; 
+    font : 500 14px/14px Tahoma;
+    cursor: pointer;
+}
+
+.content-myBook {
+    margin-top : 20px;
+} 
+
+.title-myBook {
+    color : rgba(#2ecc71, 0.7);
+}
+
+.book-title {
+    margin-bottom: 10px;
+    font: 500 30px/30px Tahoma;
+    letter-spacing : 2px;
+    text-align: center;
+}
+
+.book-paragraph{
+    font : 400 16px/22px Tahoma;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+
+
+.btn-delete {
+    border : none;
+    padding: 10px 20px;
+    font: 500 14px/14px Tahoma;
+    letter-spacing: 1px;
+    background: #e74c3c;
+    color : #FFF;
+    margin:0 2px;
+    cursor: pointer;
+}
+

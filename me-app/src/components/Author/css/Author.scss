@@ -1,0 +1,61 @@
+.myAuthor {
+    //background: #DDD;
+    margin : 0 auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.inside-myAuthor {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.btn-back{
+    align-self: center;
+    border : none;
+    color : #FFF;
+    background: #3498db;
+    padding : 10px 15px; 
+    font : 500 14px/14px Tahoma;
+    cursor: pointer;
+}
+
+.content-myAuthor {
+    margin-top : 20px;
+} 
+
+.title-myAuthor {
+    color : rgba(#2ecc71, 0.7);
+}
+
+.myGroup {
+    padding-bottom: 15px;
+}
+
+.label {
+    color : #B8B8B8;
+    padding-bottom: 10px;
+}
+
+.span {
+    color : #000;
+    font : 500 17px/17px Tahoma;
+    padding: 0 0 10px 10px;
+}
+
+
+
+
+
+.btn-delete {
+    border : none;
+    padding: 10px 20px;
+    font: 500 14px/14px Tahoma;
+    letter-spacing: 1px;
+    background: #e74c3c;
+    color : #FFF;
+    margin:0 2px;
+    cursor: pointer;
+}
+
