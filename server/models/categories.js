@@ -1,4 +1,5 @@
-
+const express = require('express');
+const router = express.Router();
 const connection = require('./connect.js');
 const graphql = require('graphql');
 const {
@@ -27,15 +28,15 @@ module.exports.categories = {
     resolve(parent, args) {
         return new Promise(
             function(resolve, reject) {
-                var selectCategories = "SELECT * FROM expressdb.categories";
-                connection.query(selectCategories, function(error, result) {
-                    if(error){
-                        return reject(error);
-                    } else {
-                        console.log(result);
-                        return resolve(result);
-                    }
-                })
+              var selectCategories = "SELECT * FROM expressdb.categories";
+              connection.query(selectCategories, function(error, result) {
+                  if(error){
+                      return reject(error);
+                  } else {
+                      console.log(result);
+                      return resolve(result);
+                  }
+              });
             }
         )
     }

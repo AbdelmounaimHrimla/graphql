@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const graphqlHTTP = require('express-graphql');
 const exported_from_categories = require('./models/categories');
 const exported_from_books = require('./models/books');
@@ -38,6 +39,8 @@ const mutation = new GraphQLObjectType({
 
     }
 });
+app.use(cors());
+app.options('*', cors());
 
 app.use('/mygraphiql', graphqlHTTP ({
     graphiql : true,
@@ -48,9 +51,9 @@ app.use('/mygraphiql', graphqlHTTP ({
 }));
 
 
+  
 
-
-const port = 7000;
+const port = 8000;
 app.listen(port, () =>  
     {
         console.log(`Now You Can See  Us On ${port}` ),

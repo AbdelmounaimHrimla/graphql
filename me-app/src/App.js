@@ -1,16 +1,23 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 import Blog from './containers/Blog/Blog';
+
+const client = new ApolloClient({
+  uri : 'http://localhost:8000/mygraphiql'
+});
 
 function App() {
   return (
-    <div className="App">
-	    <BrowserRouter>
-	      <Blog />
-	     </BrowserRouter>
-    </div>
+  	<ApolloProvider client={client}>
+      <div className="App">
+        <BrowserRouter>
+          <Blog />
+        </BrowserRouter>
+      </div>
+    </ApolloProvider>
   );
 }
 

@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
 import './css/Authors.css'; 
 import { NavLink } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { Query } from 'react-apollo';
+
+const AUTHORS_QUERY = gql`
+    query AuthorsQuery {
+        authors {
+            id
+            firstName
+            lastName
+            age
+        }
+    }
+`;
 class Authors extends Component {
     render() {
         return (
@@ -21,17 +34,31 @@ class Authors extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>First Name 1</td>
-                                <td>Last Name 1</td>
-                                <td>11</td>
-                                <td>
-                                    <NavLink to='/author/1'><button className="btn-show">Show</button></NavLink>
-                                    <NavLink to='/edit-author/1'><button className="btn-edit">Edit</button></NavLink>
-                                    <NavLink to='/authors'><button className="btn-delete">Delete</button></NavLink>
-                                </td>
-                            </tr>
+                        <Query query={AUTHORS_QUERY}>
+                            {
+                                ({loading, error, data}) => {
+                                    if(loading) return <tr><td>loading...</td></tr>
+                                    if(error) console.log(error)
+                                    console.log("DATA SHOULD BE => ", data);
+                                    return (
+                                        data.authors.map(author => (
+                                            <tr key={author.id}>
+                                                <td>{author.id}</td>
+                                                <td>{author.firstName}</td>
+                                                <td>{author.lastName}</td>
+                                                <td>{author.age}</td>
+                                                <td>
+                                                    <button className="btn-show"><NavLink to={`/author/${author.id}`}>Show</NavLink></button>
+                                                    <button className="btn-edit"><NavLink to='/edit-author/1'>Edit</NavLink></button>
+                                                    <button className="btn-delete"><NavLink to='/authors'>Delete</NavLink></button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )
+                                    
+                                }
+                            }
+                        </Query>
                         </tbody>
                     </table>
                 </div>
