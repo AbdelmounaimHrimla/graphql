@@ -32,6 +32,16 @@ class Home extends Component {
                             New Author
                         </div>
                     </NavLink>
+                    <NavLink to="/categories">
+                        <div className="card home-categories">
+                            Categories
+                        </div>
+                    </NavLink>
+                    <NavLink to="/add-category">
+                        <div className="card home-addCategory">
+                            New Category
+                        </div>
+                    </NavLink>
                 </div>
             </div>
         );

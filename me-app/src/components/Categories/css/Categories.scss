@@ -1,0 +1,86 @@
+.myCategories {
+    //background: #DDD;
+    margin : 0 auto;
+    max-width: 600px;
+    width: 100%;
+}
+
+.inside-categories {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.btn-new{
+    align-self: center;
+    border : none;
+    color : #FFF;
+    background: #3498db;
+    padding : 10px 15px; 
+    font : 500 14px/14px Tahoma;
+    cursor: pointer;
+}
+
+.content-categories {
+    margin-top : 20px;
+} 
+
+.title-categories {
+    color : rgba(#2ecc71, 0.7);
+}
+
+.table-categories{
+    width: 100%;
+    text-align: center;
+}
+
+.table-categories thead{
+    color :#FFF;
+    background: #2ecc71;
+}
+
+.table-categories thead th {
+    padding: 3px 0px;
+}
+
+.table-categories tbody{
+    color :#000;
+    background: #FFF;
+}
+
+.table-categories tbody tr {
+    padding: 3px 0px;
+    font : 500 15px/15px Tahoma;
+    background: #AAA;
+}
+
+.btn-show {
+    border : none;
+    padding: 5px 8px;
+    font: 500 14px/14px Tahoma;
+    letter-spacing: 1px;
+    background: #2980b9;
+    color : #FFF;
+    margin:0 2px;
+    cursor: pointer;
+}
+.btn-edit {
+    border : none;
+    padding: 5px 8px;
+    font: 500 14px/14px Tahoma;
+    letter-spacing: 1px;
+    background: #2ecc71;
+    color : #FFF;
+    margin:0 2px;
+    cursor: pointer;
+}
+.btn-delete {
+    border : none;
+    padding: 5px 8px;
+    font: 500 14px/14px Tahoma;
+    letter-spacing: 1px;
+    background: #e74c3c;
+    color : #FFF;
+    margin:0 2px;
+    cursor: pointer;
+}
