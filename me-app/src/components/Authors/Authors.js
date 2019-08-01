@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './css/Authors.css'; 
 import { NavLink } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 
 const AUTHORS_QUERY = gql`
     query AuthorsQuery {
@@ -14,10 +14,22 @@ const AUTHORS_QUERY = gql`
         }
     }
 `;
+
+const DELETE_AUTHOR = gql`
+    mutation DeleteAuthor($id : Int!) {
+        deleteAuthor(id: $id) {
+            id
+            firstName
+            lastName
+            age
+        }
+    }
+`;
 class Authors extends Component {
     render() {
         return (
-            <div className="myAuthors">
+            <Fragment>
+                <div className="myAuthors">
                 <div className="inside-authors">
                     <h1 className="title-books">Authors</h1>
                     <NavLink to='/add-author'><button className="btn-new">+ New Author</button></NavLink>
@@ -48,9 +60,29 @@ class Authors extends Component {
                                                 <td>{author.lastName}</td>
                                                 <td>{author.age}</td>
                                                 <td>
+                                                    <Mutation mutation={DELETE_AUTHOR}>
+                                                        {
+                                                            (deleteAuthor, {loading, error}) => {
+                                                                return (
+                                                                    <button 
+                                                                className="btn-delete" 
+                                                                onClick={
+                                                                    event => {
+                                                                        deleteAuthor({
+                                                                            variables : {
+                                                                                id : parseInt(author.id)
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                }
+                                                                >Delete
+                                                                </button>
+                                                                )
+                                                            }
+                                                        }
+                                                    </Mutation>
                                                     <button className="btn-show"><NavLink to={`/author/${author.id}`}>Show</NavLink></button>
                                                     <button className="btn-edit"><NavLink to='/edit-author/1'>Edit</NavLink></button>
-                                                    <button className="btn-delete"><NavLink to='/authors'>Delete</NavLink></button>
                                                 </td>
                                             </tr>
                                         ))
@@ -63,6 +95,7 @@ class Authors extends Component {
                     </table>
                 </div>
             </div>
+            </Fragment>
         );
     }
 }

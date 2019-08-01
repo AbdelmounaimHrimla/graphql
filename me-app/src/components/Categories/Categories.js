@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-//import './css/Categories.css';
+import React, { Component, Fragment } from 'react';
+import './css/Categories.css';
 import { NavLink } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 
 
 const CATEGORIES_QUERY = gql`
@@ -13,11 +13,20 @@ const CATEGORIES_QUERY = gql`
         }
     }
 `;
+
+const DELETE_CATEGORY = gql`
+    mutation DeleteCategory($id : Int!) {
+        deleteCategory(id: $id) {
+            id
+            libelle
+        }
+    }
+`;
 class Categories extends Component {
     render() {
         
         return ( 
-
+            <Fragment>
                 <div className="myCategories">     
                     <div className="inside-categories">
                         <h1 className="title-categories">Categories</h1>
@@ -46,8 +55,28 @@ class Categories extends Component {
                                                     <td>{category.libelle}</td>
                                                     <td>
                                                         <button className="btn-show"><NavLink to={`/category/${category.id}`}>Show</NavLink></button>
-                                                        <button className="btn-edit"><NavLink to='/edit-category/1'>Edit</NavLink></button>
-                                                        <button className="btn-delete"><NavLink to='/categories'>Delete</NavLink></button>
+                                                        <button className="btn-edit"><NavLink to={`/edit-category/${category.id}`}>Edit</NavLink></button>
+                                                        <Mutation mutation={DELETE_CATEGORY}>
+                                                            {
+                                                                (deleteCategory, {loading, error}) => {
+                                                                    return (
+                                                                        <button 
+                                                                        className="btn-delete" 
+                                                                        onClick={
+                                                                            event => {
+                                                                                deleteCategory({
+                                                                                    variables : {
+                                                                                        id : parseInt(category.id)
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        }
+                                                                        ><NavLink to='/categories'>Delete</NavLink></button>
+
+                                                                    )
+                                                                }
+                                                            }
+                                                        </Mutation>
                                                     </td>
                                                 </tr>
                                             ))
@@ -60,7 +89,7 @@ class Categories extends Component {
                         </table>
                     </div> 
                 </div>
-
+            </Fragment>
         );
     }
 }

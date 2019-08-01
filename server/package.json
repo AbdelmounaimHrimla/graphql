@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "node app.js",
-    "app": "nodemon app.js"
+    "app": "nodemon app"
   },
   "author": "Hrimla",
   "license": "MIT",
@@ -14,9 +13,8 @@
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
     "graphql": "^14.4.2",
-    "mysql": "^2.17.1"
-  },
-  "devDependencies": {
+    "mysql": "^2.17.1",
     "nodemon": "^1.19.1"
-  }
+  },
+  "devDependencies": {}
 }

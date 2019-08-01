@@ -2,7 +2,7 @@ const mysql = require('mysql');
 var connection = mysql.createConnection({
     host : 'localhost',
     user : 'root',
-    password : '',
+    password : 'abdelmounaim',
     database : 'expressdb'
 });
 
@@ -11,7 +11,8 @@ connection.connect(function(error, result) {
     if(error) {
         console.log("My Errors",error);
     } else {
-        console.log("My Success", result);
+        console.log("My Connect => Success");
+        console.log("---------------------");
     }
 })
     

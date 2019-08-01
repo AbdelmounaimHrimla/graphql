@@ -17,7 +17,7 @@ const {
 CategoriesType = new GraphQLObjectType({
     name : 'Category',
     fields : () => ({
-        id : {type : GraphQLInt},
+        id : {type : GraphQLID},
         libelle : {type : GraphQLString}
     })
 });
@@ -86,12 +86,10 @@ module.exports.createTableCategories = {
 module.exports.addCategory = {
     type : CategoriesType,
     args : {
-        id : {type : new GraphQLNonNull(GraphQLInt)},
         libelle : {type : new GraphQLNonNull(GraphQLString)}
     },
     resolve(parent, args) {
         var myValues = {
-            id : args.id,
             libelle : args.libelle
         }
         return new Promise(

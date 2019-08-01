@@ -1,4 +1,4 @@
-
+const booksType = require('./books');
 const connection = require('./connect.js');
 const graphql = require('graphql');
 const {
@@ -11,14 +11,29 @@ const {
     GraphQLObjectType
 } = graphql;
 
+//For Exports A Type
+/*module.exports.authorsType = {
+    AuthorsType = new GraphQLObjectType({
+        name : 'Author',
+        fields : () => ({
+            id : {type : GraphQLID},
+            firstName : {type : GraphQLString},
+            lastName : {type : GraphQLString},
+            age : {type : GraphQLInt},
+            //books : {type : booksType.booksType}
+    
+        })
+    })
+}*/
 //Table Authors
-AuthorsType = new GraphQLObjectType({
+const AuthorsType = new GraphQLObjectType({
     name : 'Author',
     fields : () => ({
-        id : {type : GraphQLInt},
+        id : {type : GraphQLID},
         firstName : {type : GraphQLString},
         lastName : {type : GraphQLString},
         age : {type : GraphQLInt},
+        //books : {type : booksType.booksType}
 
     })
 });
@@ -68,7 +83,7 @@ module.exports.author = {
 
 
 module.exports.createTableAuthors = {
-    type : BooksType,
+    type : AuthorsType,
     resolve(parent, args) {
         return new Promise(
             function(resolve, reject){
@@ -88,14 +103,12 @@ module.exports.createTableAuthors = {
 module.exports.addAuthor = {
     type : AuthorsType,
     args : {
-        id : {type : new GraphQLNonNull(GraphQLInt)},
         firstName : {type : new GraphQLNonNull(GraphQLString)},
         lastName : {type : new GraphQLNonNull(GraphQLString)},
         age : {type : new GraphQLNonNull(GraphQLInt)},
     },
     resolve(parent, args) {
         var myValues = {
-            id : args.id,
             firstName : args.firstName,
             lastName : args.lastName,
             age : args.age
@@ -138,7 +151,7 @@ module.exports.deleteAuthor = {
 }
 
 module.exports.updateAuthor = {
-    type : BooksType,
+    type : AuthorsType,
     args : {
         id : {type : new GraphQLNonNull(GraphQLInt)},
         firstName : {type : new GraphQLNonNull(GraphQLString)},

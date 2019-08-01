@@ -33,12 +33,12 @@ class Blog extends Component {
 
                     <Route path="/authors" component={Authors} />        
                     <Route path="/add-author" component={AddAuthor} />
-                    <Route path="/edit-author/1" component={EditAuthor} />   
+                    <Route path="/edit-author/:id" component={EditAuthor} />   
                     <Route path="/author/:id" component={Author} />
 
                     <Route path="/categories" component={Categories}/>
                     <Route path="/add-category" component={AddCategory} />
-                    <Route path="/edit-category/1" component={EditCategory} />
+                    <Route path="/edit-category/:id" component={EditCategory} />
                     
                 </Switch>    
             </div>

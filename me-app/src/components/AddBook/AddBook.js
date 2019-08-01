@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 
 const ADD_BOOK = gql`
-    mutation AddBook($id : Int!, $title: String!, $body: String!){
-        addBook(id: $id, title: $title, body: $body){
+    mutation AddBook($title: String!, $body: String!){
+        addBook(title: $title, body: $body){
             id
             title
             body
@@ -19,26 +19,29 @@ class AddBook extends Component {
         body : ''
     }
 
-    submitHandler = (event) => {
-        event.preventDefault();
-        console.log(this.state.title, this.state.body);
-        
-    }
-
     render() {
-        let input;
         return (
             <div className="addBook">
                 <div className="inside-addBook">
                     <h1 className="title-addBook">New Book</h1>
                     <NavLink to="/books"><button className="btn-back">Go Back</button></NavLink>
                 </div>
-                <Mutation mutation={ADD_BOOK} variables={ {title: this.state.title, body: this.state.body} }>
+                <Mutation mutation={ADD_BOOK} >
                     {
                         (addBook, {data}) => (
                             <div className="content-addBook">
                                 <form className="myForm" 
-                                onSubmit={this.submitHandler.bind()}
+                                onSubmit={
+                                    (event) => {
+                                        event.preventDefault();
+                                        addBook({
+                                            variables : {
+                                                title: this.state.title, 
+                                                body : this.state.body
+                                            }
+                                        })
+                                    }
+                                }
                                 >
                                     
                                     <div className="myGroup">
@@ -53,11 +56,7 @@ class AddBook extends Component {
                                             onChange={
                                                 event => this.setState({title : event.target.value})
                                             }
-                                            ref={
-                                                node => {
-                                                    input = node;
-                                                }
-                                            }
+                                            
                                             />
                                     </div>
                                     <div className="myGroup">
@@ -71,11 +70,7 @@ class AddBook extends Component {
                                         placeholder="Body" 
                                         value ={this.state.body} 
                                         onChange={event => this.setState({body : event.target.value})} 
-                                        ref={
-                                            node => {
-                                                input = node;
-                                            }
-                                        }
+                                        
                                         ></textarea>
                                     </div>
                                     <div className="">

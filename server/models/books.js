@@ -1,4 +1,3 @@
-
 const connection = require('./connect.js');
 const graphql = require('graphql');
 const {
@@ -13,14 +12,16 @@ const {
 } = graphql;
 
 //Table Books
-BooksType = new GraphQLObjectType({
-    name : 'Book',
-    fields : () => ({
-        id : {type : GraphQLInt},
-        title : {type : GraphQLString},
-        body : {type : GraphQLString}
+module.exports.booksType = 
+    BooksType = new GraphQLObjectType({
+        name : 'Book',
+        fields : () => ({
+            id : {type : GraphQLID},
+            title : {type : GraphQLString},
+            body : {type : GraphQLString},
+        })
     })
-});
+
 
 
 module.exports.books = {
@@ -72,7 +73,7 @@ module.exports.createTableBooks = {
     resolve(parent, args) {
         return new Promise(
             function(resolve, reject){
-                var createTableBooksQuery = "CREATE TABLE expressdb.books(id INT PRIMARY KEY, title VARCHAR(50), body VARCHAR(250))";
+                var createTableBooksQuery = "CREATE TABLE expressdb.books(id INT PRIMARY KEY AUTO_INCREMENT, title VARCHAR(50), body VARCHAR(250))";
                 connection.query(createTableBooksQuery, function(error, result){
                     if(error) {
                         return reject(error);
@@ -88,13 +89,11 @@ module.exports.createTableBooks = {
 module.exports.addBook = {
     type : BooksType,
     args : {
-        id : {type : new GraphQLNonNull(GraphQLInt)},
         title : {type : new GraphQLNonNull(GraphQLString)},
         body : {type : new GraphQLNonNull(GraphQLString)}
     },
     resolve(parent, args) {
         var myValues = {
-            id : args.id,
             title : args.title,
             body : args.body
         }

@@ -56,7 +56,7 @@ app.use('/mygraphiql', graphqlHTTP ({
 const port = 8000;
 app.listen(port, () =>  
     {
-        console.log(`Now You Can See  Us On ${port}` ),
+        console.log(`Now You Can See  Us On http://localhost:${port}/mygraphiql` ),
         console.log(`---------------------------` )
     }   
 );

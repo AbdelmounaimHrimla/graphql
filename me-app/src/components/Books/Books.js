@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './css/Books.css';
 import { NavLink } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 
 
 const BOOKS_QUERY = gql`
@@ -14,12 +14,22 @@ const BOOKS_QUERY = gql`
         }
     }
 `;
+
+const DELETE_BOOK = gql`
+    mutation DeleteBook($id : Int!) {
+        deleteBook(id: $id) {
+            id
+            title
+            body
+        }
+    }
+`;
 class Books extends Component {
     render() {
         
         return ( 
-
-                <div className="myBooks">     
+            <Fragment>
+            <div className="myBooks">     
                     <div className="inside-books">
                         <h1 className="title-books">Books</h1>
                         <button className="btn-new"><NavLink to='/add-book'>+ New Book</NavLink></button>
@@ -50,7 +60,26 @@ class Books extends Component {
                                                     <td>
                                                         <button className="btn-show"><NavLink to={`/book/${book.id}`}>Show</NavLink></button>
                                                         <button className="btn-edit"><NavLink to='/edit-book/1'>Edit</NavLink></button>
-                                                        <button className="btn-delete"><NavLink to='/books'>Delete</NavLink></button>
+                                                        <Mutation mutation={DELETE_BOOK}>
+                                                            {
+                                                                (deleteBook, {loading, error}) => {
+                                                                    return (
+                                                                        <button 
+                                                                        className="btn-delete" 
+                                                                        onClick={
+                                                                            event => {
+                                                                                deleteBook({
+                                                                                    variables : {
+                                                                                        id : parseInt(book.id)
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        }
+                                                                        >Delete</button>
+                                                                    )
+                                                                }
+                                                            }
+                                                        </Mutation>
                                                     </td>
                                                 </tr>
                                             ))
@@ -63,7 +92,7 @@ class Books extends Component {
                         </table>
                     </div> 
                 </div>
-
+            </Fragment>
         );
     }
 }
